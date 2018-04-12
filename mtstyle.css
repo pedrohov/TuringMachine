@@ -1,0 +1,144 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: #F0F1F2;
+	font-family: 'Montserrat', sans-serif;
+}
+
+canvas {
+	position: absolute;
+	width: 800px;
+	height: 600px;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 0;
+	margin: auto;
+	border: 2px solid #344B60;
+}
+
+.menu {
+	margin: 0px auto;
+	background-color: #334A5F;
+}
+
+ul {
+	margin: 0 auto;
+	padding: 0;
+	width: 800px;
+	list-style: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+li {
+	background-color: #334A5F;
+	color: #fff;
+	text-align: center;
+	padding: 0 20px;
+	height: 40px;
+	cursor: pointer;
+	text-transform: uppercase;
+	font-weight: bold;
+	line-height: 40px;
+	vertical-align: middle;
+
+	-webkit-transition: background-color 0.3s;
+    transition: background-color 0.3s;
+}
+
+.submenu, .submenu li {
+	background-color: #49749b;
+	font-size: 14px;
+	font-weight: normal;
+	height: 30px;
+	line-height: 30px;
+}
+
+li:hover {
+	background-color: #2195D6;
+}
+
+.selected, .selected:hover {
+	background-color: #FF8663 !important;
+}
+
+.container {
+	position: relative;
+	height: calc(100vh - 70px);
+}
+
+.column {
+	/*border: 2px solid green;*/
+	max-width: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 20px 40px;
+}
+
+.input-string {
+	display: flex;
+	flex-flow: column;
+	font-size: 12px;
+	
+}
+
+button { margin: 10px 0; }
+
+.helpLog {
+	margin: 0;
+	font-size: 12px;
+	text-align: center;
+}
+
+.newTransition {
+	display: none;
+	color: #F0F1F2;
+	background-color: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	width: 100%;
+	height: 100vh;
+	z-index: 1;
+	/*display: table;*/
+}
+
+.center {
+	position: relative;
+	margin: 0 auto;
+	width: 500px;
+	height: 100vh;
+	display: table-cell;
+	text-align: center;
+    vertical-align: middle;
+}
+
+table {
+	margin: 0 auto;
+	text-transform: uppercase;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.spacer {
+	margin: 0 0 3px 5px;
+
+}
+
+td {
+	text-align: right;
+}
+
+#transRead, #transWrite {
+	text-align: center;
+}
+
+.warningDialog {
+	text-align: center;
+	font-weight: normal;
+	color: "#000000";
+}
+
+/* #FF8663 #2195D6 #283F54 #334A5F */
