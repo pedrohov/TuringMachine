@@ -46,17 +46,17 @@ class TM(object):
                 return;
             self.currentBlock = main;
 
-        # Faz a execucao e mostra apenas o resultado final:
-        
+        # Faz a execucao:
         for i in range(0, self.steps + 1):
             stop = self.step();
             if(stop):
                 break;
 
             # Faz a execucao passo a passo:
-            #if(self.mode == TM.MODE_VERBOSE):
-            #    sleep(1);
+            if(self.mode == TM.MODE_VERBOSE):
+                sleep(0.1);
 
+        # Exibe o resultado final se a execucao foi feita em Resume:
         if(self.mode == TM.MODE_RESUME):
             self.tape.show(self.currentBlock.name, self.lastState);
         

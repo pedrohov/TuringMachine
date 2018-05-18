@@ -59,7 +59,7 @@ class Parser:
                     return None;
 
                 config[2] = delim;
-                foundSteps = False;
+                foundHead = False;
 
         return config;
 
