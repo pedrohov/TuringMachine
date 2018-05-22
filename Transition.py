@@ -1,5 +1,6 @@
 # Simulador de Maquina de Turing ver 1.0.
 # Desenvolvido como trabalho pratico para a disciplina de Teoria da Computacao.
+# Python v.3.6.4
 # Pedro Henrique Oliveira Veloso - 0002346, IFMG, 2018.
 
 class Transition(object):

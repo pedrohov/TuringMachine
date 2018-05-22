@@ -1,5 +1,6 @@
 # Simulador de Maquina de Turing ver 1.0.
 # Desenvolvido como trabalho pratico para a disciplina de Teoria da Computacao.
+# Python v.3.6.4
 # Pedro Henrique Oliveira Veloso - 0002346, IFMG, 2018.
 
 from pathlib import Path;
@@ -161,3 +162,37 @@ class Parser:
             name = "." + name;
 
         return name;
+
+    def prompt(self, iniConfig):
+        print("\nAperte enter para continuar ou configure a maquina.");
+        print("-v ou -verbose\n\tExecuta a maquina de turing e exibe cada passo." +
+            "\n-r ou -resume\n\tExecuta a maquina de turing e exibe apenas o resultado." +
+            "\n-s # ou -step #\n\tInforma o numero maximo de passos possivel." +
+            "\n-h '[]' ou -head '[]'\n\tAltera o caractere delimitador do cabecote da fita.");
+        line = input("Config: ");
+        print("");
+        aLine = line.split();
+        config = [iniConfig[0], iniConfig[1], iniConfig[2]];
+
+        foundSteps = False;
+        foundHead  = False;
+        for i in range(0, len(aLine)):
+            arg = aLine[i];
+            
+            if(((arg == "-resume") or (arg == "-r")) and (foundHead == False) and (foundSteps == False)):
+                config[0] = TM.MODE_RESUME;
+            elif(((arg == "-verbose") or (arg == "-v")) and (foundHead == False) and (foundSteps == False)):
+                config[0] = TM.MODE_VERBOSE;
+            elif(((arg == "-head") or (arg == "-h"))  and (foundHead == False) and (foundSteps == False)):
+                foundHead = True;
+            elif(((arg == "-step") or (arg == "-s"))  and (foundHead == False) and (foundSteps == False)):
+                foundSteps = True;
+            elif (foundSteps == True):
+                config[1] = int(arg);
+                foundSteps = False;
+            elif (foundHead == True):
+                delim = [arg[1], arg[2]];
+                config[2] = delim;
+                foundHead = False;
+        
+        return config;

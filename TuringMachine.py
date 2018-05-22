@@ -1,5 +1,6 @@
 # Simulador de Maquina de Turing ver 1.0.
 # Desenvolvido como trabalho pratico para a disciplina de Teoria da Computacao.
+# Python v.3.6.4
 # Pedro Henrique Oliveira Veloso - 0002346, IFMG, 2018.
 
 from Tape import Tape;
@@ -35,32 +36,47 @@ class TM(object):
         return;
 
     def execute(self):
-        """ Executa a maquina de turing. """
+        """
+            Executa a maquina de turing. 
+            Retorna True se a execucao for pausada.
+        """
 
         # Determina o bloco de inicio:
         if(self.currentBlock == None):
             main = self.getBlock("............main");
             # Se nao houver o bloco main, encerra a execucao:
             if(main == None):
-                print("> Bloco 'main' nao especificado.");
-                return;
+                print("\n> Bloco 'main' nao especificado.");
+                return False;
             self.currentBlock = main;
 
         # Faz a execucao:
+        stop = False;
         for i in range(0, self.steps + 1):
+            # Realiza um passo:
             stop = self.step();
-            if(stop):
+
+            # Programa terminou ou programa pausado:
+            if(stop == 1) or (stop == 2):
                 break;
 
-            # Faz a execucao passo a passo:
+            # Esgotou o numero de passos:
+            elif(i == self.steps):
+                stop = 2; # Trata a parada como uma pausa.
+
+            # Faz a execucao passo a passo com um intervalo de tempo:
             if(self.mode == TM.MODE_VERBOSE):
                 sleep(0.1);
 
-        # Exibe o resultado final se a execucao foi feita em Resume:
+        # Exibe apenas o resultado final se a execucao foi feita em Resume:
         if(self.mode == TM.MODE_RESUME):
             self.tape.show(self.currentBlock.name, self.lastState);
-        
-        return;
+
+        # Se houver uma pausa, informe ao simturing.py:
+        if(stop == 2):
+            return True;
+
+        return False;
 
     def step(self):
         """
@@ -74,7 +90,7 @@ class TM(object):
             if(self.mode == TM.MODE_VERBOSE):
                 self.tape.show(self.currentBlock.name, self.currentBlock.currentState);
             self.start = True;
-            return False;
+            return 0;
 
         # Mostra o cabecote:
         if(self.mode == TM.MODE_VERBOSE):
@@ -89,8 +105,8 @@ class TM(object):
             # verifica se ha algum bloco para retornar:
             if(len(self.stack) == 0):
                 # Encerra a execucao:
-                print("> Nao existem mais transicoes possiveis.");
-                return True;
+                print("\n> Nao existem mais transicoes possiveis.");
+                return 1;
             else:
                 # Deve retornar ao bloco que o chamou no estado especificado:
                 (block, state) = self.stack.pop();
@@ -98,18 +114,18 @@ class TM(object):
                 self.currentBlock.currentState = state;
         elif(newBlock == "pare"):
             # Diretiva especial para parar a execucao:
-            return True;
+            return 1;
         elif(newBlock == "pause"):
             # Diretiva especial para pausar a execucao:
-            print("> Execucao pausada.");
-            return True;
+            print("\n> Execucao pausada.");
+            return 2;
         else:
             # Atualiza o bloco atual:
             self.currentBlock = newBlock;
 
         self.lastState = self.currentBlock.currentState;
 
-        return False;
+        return 0;
 
     def setTapeInput(self, tapeInput):
         """
@@ -198,6 +214,12 @@ class TM(object):
 
         newTransition = Transition(source, target, read, write, movement, pause);
         block.addTransition(newTransition);
+        return;
+
+    def setConfig(self, config):
+        self.mode  = config[0];
+        self.steps = config[1];
+        self.tape.delim = config[2];
         return;
 
     def __str__(self):

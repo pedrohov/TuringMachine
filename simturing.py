@@ -1,5 +1,6 @@
 # Simulador de Maquina de Turing ver 1.0.
-# Desenvolvido como trabalho prático para a disciplina de Teoria da Computacao.
+# Desenvolvido como trabalho pratico para a disciplina de Teoria da Computacao.
+# Python v.3.6.4
 # Pedro Henrique Oliveira Veloso - 0002346, IFMG, 2018.
 
 import sys;
@@ -30,4 +31,9 @@ if (__name__ == "__main__"):
         sys.exit();
     
     # Executa a maquina:
-    mt.execute();
+    pause = True;
+    while(pause):
+    	pause = mt.execute();
+    	if(pause):
+    		config = parser.prompt(config);
+    		mt.setConfig(config);
